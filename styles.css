@@ -1,0 +1,23 @@
+label {
+    font-style: italic;
+}
+
+input[type=text], input[type=password], input[type=number], select, textarea {
+    margin: 10px 0 0px 0;
+}
+
+textarea {
+    overflow-wrap: break-word;
+    resize: none;
+}
+
+.toggle-pin {
+    user-select: none;
+
+}
+
+.div-centered {
+    text-align: left; 
+    margin: auto; 
+    width: 200px;
+  }
