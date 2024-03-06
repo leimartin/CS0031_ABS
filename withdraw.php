@@ -12,20 +12,29 @@
 <body>
     <div class="jumbotron text-center">
         <h1>AUTOMATED BANK SYSTEM</h1>
-        <p>withdraw n yan teh</p> 
+        <p>WITHDRAW</p>
     </div>
 
     <div class="container">
+        <div class="row" style="padding-left: 25vw; padding-bottom: 5vh">
+            <a href="index.php"><button class="btn btn-primary">< BACK</button></a>
+        </div>
+
         <div class="row text-center">
             <div class="div-centered">
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" autocomplete="off">
-                    <input type="number" name="card-number"> <br/>
-                    <label>CARD ID</label> <br/>
+                    <div class="row text-center">
+                        <input type="number" name="deposit-amount" class="form-control">
+                        <label>AMOUNT</label> 
+                    </div> <br/>
 
-                    <input type="number" name="deposit-amount"> <br/>
-                    <label>AMOUNT</label> <br/>
+                    <div class="row text-center">
+                        <input type="submit" name="submit" value="WITHDRAW FUNDS" class="btn btn-danger" style="font-size: 20px">
 
-                    <input type="submit" name="submit"> 
+
+                    </div>
+
+
                 </form>
             </div>
         </div>
@@ -36,7 +45,7 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['submit'])) {
             $AMOUNT = $_POST['deposit-amount'];
-            $CARD_ID = $_POST['card-number'];
+            $CARD_ID = $_SESSION['cardId'];
             $sth = "SELECT * FROM `users_table` WHERE CARD_ID = ?";
 
             $sth_select = $conn->prepare($sth);
@@ -52,7 +61,7 @@
                         if($row['INIT_DEPOSIT'] < $AMOUNT) {
                             echo '<script>';
                             echo 'alert("Insufficient Savings.\nACCOUNT NUMBER: ' . $CARD_ID . '\nBALANCE: ' .  $row['INIT_DEPOSIT'] . '");';
-                            echo 'window.location.href = "main.php";';
+                            echo 'window.location.href = "index.php";';
                             echo '</script>';
 
                         } else {
@@ -68,7 +77,7 @@
 
                                 echo '<script>';
                                 echo 'alert("Balance updated successfully!\nACCOUNT NUMBER: ' . $CARD_ID . '\nBALANCE: ' . $BALANCE . '");';
-                                echo 'window.location.href = "main.php";';
+                                echo 'window.location.href = "index.php";';
                                 echo '</script>';
                             
                                 die();
