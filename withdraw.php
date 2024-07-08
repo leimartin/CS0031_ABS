@@ -7,47 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WITHDRAW</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <h1>AUTOMATED BANK SYSTEM</h1>
-        <p>WITHDRAW</p>
-    </div>
-
-    <div class="container">
-        <div class="row" style="padding-left: 25vw; padding-bottom: 5vh">
-            <a href="index.php"><button class="btn btn-primary">< BACK</button></a>
+   
+<body class="overlay">
+    <a href="index.php">
+        <span class="icon-text">
+            <span class="icon"><i class="fas fa-2x fa-home"></i></span>
+            <p class="title is-4 has-text-link px-2">home</p>
+        </span>
+    </a>
+    <section class="section is-medium">
+        <div class="columns has-text-light">
+         <div class="column is-4" >
+            <h1 class="title is-1 has-text-light"><span class="has-text-info">Byte</span>Savings</h1>
         </div>
 
-        <div class="row text-center">
-            <div class="div-centered">
+        <div class="column is-6 py-6">
+                <h1 class="title is-2 has-text-light">Withdraw</h1>
+            <div class="has-text-centered">
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" autocomplete="off">
                     <div class="row text-center">
-                        <input type="number" name="deposit-amount" class="form-control">
+                        <input type="number" name="deposit-amount" class="input">
                         <label>AMOUNT</label> 
                     </div> <br/>
 
-                    <div class="row text-center">
-                        <input type="submit" name="submit" value="WITHDRAW FUNDS" class="btn btn-danger" style="font-size: 20px">
-
-
-                    </div>
-
-
+                    <input type="submit" name="submit" value="Withdraw Funds" class="button is-warning is-light has-text-weight-bold" style="font-size: 20px">
+                    
                 </form>
             </div>
         </div>
     </div>
-
+</div>
+</section>
 <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['submit'])) {
             $AMOUNT = $_POST['deposit-amount'];
             $CARD_ID = $_SESSION['cardId'];
-            $sth = "SELECT * FROM `users_table` WHERE CARD_ID = ?";
 
+            $sth = "SELECT * FROM `clients_table` WHERE CARD_ID = ?";
             $sth_select = $conn->prepare($sth);
         
             if ($sth_select) {
@@ -67,7 +70,7 @@
                         } else {
                             $BALANCE = $row['INIT_DEPOSIT'] - $AMOUNT;
                             
-                            $update = "UPDATE users_table SET INIT_DEPOSIT = ? WHERE CARD_ID = ?";
+                            $update = "UPDATE clients_table SET INIT_DEPOSIT = ? WHERE CARD_ID = ?";
                             $sth_update = $conn->prepare($update);
 
                             if ($sth_update) {
